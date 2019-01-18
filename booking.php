@@ -4,19 +4,21 @@ session_start();
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>User Dashboard</title>
+<title>Booking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
   <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="swiper.min.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
 
   <!-- Demo styles -->
-  	<link href="animate.css" type='text/css' rel="stylesheet">
+  	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
 <style>
- html, body {
-      position: relative;
-      height: 100%;
+ 
+ * {
+	margin: 0px;
+	padding: 0px;
+	font-family: comic sans;
 }
 select:required:invalid {
   color: gray;
@@ -31,9 +33,9 @@ option {
 .locat{
 	height: 40px;
 	width: 100%px;
-	background: black;
+	background:  #0b243d;
 	color: white;
-	display: none;
+	display: block;
 
 }
 
@@ -42,16 +44,16 @@ option {
 	width: 100%;
 	height:auto;
 	margin-top: 10px;
-	display: none;
+	display: block;
 	
 }
 
 .locat2{
 	height: 40px;
 	width: 100%;
-	background: black;
+	background:  #0b243d;
 	color: white;
-	display: none;
+	display:block;
 	margin-top: 10px;
 
 }
@@ -127,6 +129,51 @@ input[type="button"]{
 	text-decoration: none;
 	color: white;
 }
+
+.sign{
+		
+		border-radius:6px;
+		background-color:#1976D2;
+		border: none;
+		color: white;
+		padding: 8px 10px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		cursor: pointer;
+		float:right;
+		
+		}
+		
+.sign:hover {
+    background-color:#ECEFF1; 
+    color: black;
+}
+.navbar li a:hover {
+     background-color: black;
+		color: white;
+	
+}
+
+.navbar ul 
+{	
+	height:50px;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #0b243d;
+}
+
+.navbar li a {
+  float: left;
+  display: block;
+  color:white;
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 22px;
+}
+
 </style>
 </head>
 <body class="animated fadeIn">
@@ -144,6 +191,7 @@ input[type="button"]{
 			$loc=$_POST['loc'];
 			$mov=$_POST['mov'];
 			$_SESSION['movie_n']=$mov;
+			$_SESSION['location']=$loc;
 	
 		}
 		else
@@ -151,7 +199,7 @@ input[type="button"]{
 			echo "";
 		}
 		
-		$qry = "select Movie_Name from movies";
+		$qry = "select * from movies";
 		$run = mysqli_query($con,$qry);
 	
 		
@@ -163,26 +211,28 @@ input[type="button"]{
 
 		
 	?>
-<table width="100%" height="20px" border="1">
-	<tr>
-	<td width="5%" bgcolor="black" >
 	
-	<h5 style="padding-top: 15px"><center><a href="userdashboard.php"><img src="back.png" height="30px" width="30px"></a></center></h5>
-
-	</td>
 	
-	<td width="90%" bgcolor="black">
-	<h3 style="color: white;padding-top: 10px "><center>Movie Ticket Booking</center></h3>
+<div class='navbar'>
+<ul>	
+<li style="margin:0px;padding-left:5px;padding-right:2px;padding-top:0px;float:left;"><a href="userdashboard.php"><img src="images/back.png" height="30px" width="30px"></a> </li>
+<li><img src="images/logo.png" style="padding-left:5px;padding-right:10px;padding-top:10px;float:left;height:35px;width:250px"></li>
 
-	</td>
-	
-	<td width="5%" bgcolor="black"><div class="h5">
-	<h4 ><center><a href="userlogout.php">Logout</a></center></h4>
-	</div>
-	</td>
-</tr>
-</table>
 
+<li ><a class="active" href="userdashboard.php">Home</a></li>
+<li><a href="#about">About</a></li>
+<li ><a href="#contact">Contact</a></li>
+
+<?php if(isset($_SESSION['name']))
+	{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign' onclick="document.location.href='userlogout.php'">Logout</button></li>
+<?php }else{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign'  onclick="document.location.href='index.php'">Sign In</button></li>
+<?php }?>
+
+
+</ul>
+</div>
 
 <?php 
 include('dbcon.php');
@@ -217,7 +267,7 @@ $row_count=mysqli_num_rows($result);
   
 
   <!-- Swiper JS -->
-  <script src="swiper.min.js"></script>
+  <script src="js/swiper.min.js"></script>
 
   <!-- Initialize Swiper -->
   <script>
@@ -253,7 +303,7 @@ $row_count=mysqli_num_rows($result);
 					<?php
 					while($data = mysqli_fetch_array($run))
 					{
-					if($data['Release_date']<="2018-09-31")
+					if($data['Release_date']<="2018-10-15")
 					{						
 					?>
 					<option value="<?php echo $data['Movie_Name']; ?>"> <?php echo $data['Movie_Name']; ?> </option>
@@ -268,7 +318,7 @@ $row_count=mysqli_num_rows($result);
 			<td width="50%">
 				<select  required  style="width:100%; height:30px " name="loc">
 					<option value="" disabled selected>Select Location</option>
-					<option value="blank"></option>
+					
 					<?php
 					
 					while($data1 = mysqli_fetch_array($run1))
@@ -284,21 +334,26 @@ $row_count=mysqli_num_rows($result);
 	
 		</tr>
 	</table>
-	<input type="submit" name="submit" value="Search Theatre" />
-	<input type="button" value="Display" onclick="javascript:showDiv();" />
+	<input type="submit" name="search_show" value="Search" />
 </form>
 </center>
-
+<br>
 <hr>
 
 
+<?php
+if(isset($_POST['search_show']))
+{
+	
+?>
+<br>
 <div id="lo" class="locat" ><center><h4 style="padding-top:10px;"><center><?php echo "Location : ".$_POST["loc"];?></center></h4></div>
 
 <div id="lo2" class="locat2" ><center><h4 style="padding-top:10px;"><center><?php echo "Movie : ".$_POST["mov"];?></center></h4></div>
 <center>
 
 <div id="lo1" class="locat1">
-<form  action="ticket.php" method="post" >
+<form method="post" >
 <table width="100%"  border="1" height="200px">	
 						<?php
 					
@@ -359,65 +414,60 @@ $row_count=mysqli_num_rows($result);
 
 </table>
 
-<input type="submit" name="submit" value="Next" style="margin-top: 10px"  />
+<input type="submit" name="submit3" value="Next" style="margin-top: 10px;margin-bottom:30px;"  />
 
 </center>
 </div>
 </form>
-    <script type="text/javascript">
-        function showDiv() {
-            div = document.getElementById('lo');
-           div.style.display="block";
-		   div1 = document.getElementById('lo1');
-           div1.style.display="block";
-		   div2 = document.getElementById('lo2');
-           div2.style.display="block";
-        }
-    </script>
 
-	
+<?php }?>
+   
 </body>
 </html>
 
 <?php
-if(!empty($_POST['submit']))
+$_SESSION['theatre_n']=null;
+$_SESSION['timer']=null;
+$thea=null;
+$tim=null;
+if(isset($_POST['submit3']))
 {
-switch ($_POST['submit']) {
-
-      case 'Search Theatre':
-            echo "";
-            break;
-
-      
-      case 'Next':
-			if( isset($_POST['theatre']) && isset($_POST['time']) )
-		{
-		
-			include ('dbcon.php');
-				$thea=$_POST['theatre'];
-				$tim=$_POST['time'];
-				$_SESSION['theatre_n']=$thea;
-				$_SESSION['timer']=$tim;
-
-
-			$qry3 = "SELECT ticket_rate_Gold, ticket_rate_Silver FROM timing WHERE showtime='$tim' AND Theatre_Name='$thea';";
-			$run3 = mysqli_query($con,$qry3);
-
-			$data3=mysqli_fetch_array($run3);
-
-			$_SESSION['Gold']=$data3['ticket_rate_Gold'];
-			$_SESSION['Silver']=$data3['ticket_rate_Silver'];
-			header('location:ticket.php');
+	if(!isset($_SESSION['name']))
+	{
+		?>
+		<script>
+		alert("Please Login to book tickets")
+		window.open('index.php','_self');
+		</script>
+		<?php
+	}
 	
-		}
-		else
-		{
-			echo "";
-		}
+	elseif( isset($_POST['theatre']) && isset($_POST['time']) )
+	{
+		include ('dbcon.php');
+		$thea=$_POST['theatre'];
+		$tim=$_POST['time'];
+		$_SESSION['theatre_n']=$thea;
+		$_SESSION['timer']=$tim;
+		?>
+		<script>
+		window.open('ticket.php','_self');
+		</script>
+		<?php
+	
+	}
+	else
+	{
+		?>
+		<script>
+		alert("Please Select Theatre and Time");
+		</script>
+		<?php	
+	}
 		
-            break;
+          
 
 }
-}
+
 
 ?>

@@ -12,20 +12,20 @@
 <html lang="en_US">
 <head>
 	<meta charset="UTF-8">
-		<title>EVENT MANAGEMENT SYSTEM</title>
-		<link rel="stylesheet" type="text/css" href="indexstyles.css">
+		<title>Sign In</title>
+		<link href="css/animate.css" type='text/css' rel="stylesheet">
+
+		<link rel="stylesheet" type="text/css" href="css/indexstyles.css">
 </head>
-<body>
+<body >
 	<div class="title">
-		<h3 align="right" style="margin-right:20px;"><a href="login.php">Admin Login</a></h3>
-		<h1  align="center"> Welcome To MovieTick</h1>
 	</div>
 	<div class="loginbox">
-		<img src="../dash/images/profile.png" class="profile" />
+		<img src="images/profile.png" class="profile" />
 		
 		<h2>Login Here</h2>
 		
-		<form action="index.php" method="post">
+		<form action="index.php" method="post" class="animated flipInY">
 			<p>Username</p>
 			<input type="text" name="username" placeholder="Enter Username" required>
 			
@@ -52,8 +52,7 @@
 		$username = $_POST['username'];
 		$password= $_POST['password'];
 		
-
-		$qry = "select * from users WHERE username='$username' AND password='$password'";
+		$qry = "select * from users WHERE username='$username'";
 		
 		$run = mysqli_query($con,$qry);
 		
@@ -63,14 +62,16 @@
 		{
 			?>
 			<script>
-			alert("Invalid Username and Password");
-			window.open('index.php','_self');
+			alert("Invalid Username");
 			</script>
 			<?php
 		}
 		else
 		{
 			$data = mysqli_fetch_array($run);
+			
+			if(password_verify($password,$data['password']))
+			{
 			
 			$un = $data['username'];
 			$em = $data['email'];
@@ -81,8 +82,20 @@
 			$_SESSION['email']=$em;
 			header('location:userdashboard.php');
 		
-		}
+			}
+			
+			else
+			{
+				?>
+			<script>
+			alert("Invalid Password");
+			</script>
+			<?php
+				
+				
+			}
 		
+	}
 	}
 
 

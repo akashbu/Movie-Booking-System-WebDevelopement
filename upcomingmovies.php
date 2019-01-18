@@ -1,25 +1,30 @@
+<?php 
+	session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Swiper demo</title>
+  <title>Upcoming Movies</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
   <!-- Link Swiper's CSS -->
-  <link rel="stylesheet" href="swiper.min.css">
+  <link rel="stylesheet" href="css/swiper.min.css">
+  <link href="css/animate.css" type='text/css' rel="stylesheet">
+
 
   <!-- Demo styles -->
   <style>
-    html, body {
-      position: relative;
-      height: 100%;
-    }
-
+   * {
+	margin: 0px;
+	padding: 0px;
+	font-family: comic sans;
+}
     .swiper-container {
       width: 100%;
       height: auto;
       background: #CFD8DC;
-      margin-top: 20px;
+      
     }
     .swiper-slide {
       font-size: 18px;
@@ -57,32 +62,76 @@
 	color: white;
 }
 
+.sign{
+		
+		border-radius:6px;
+		background-color:#1976D2;
+		border: none;
+		color: white;
+		padding: 8px 10px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		cursor: pointer;
+		float:right;
+		
+		}
+		
+.sign:hover {
+    background-color:#ECEFF1; 
+    color: black;
+}
+
+.navbar li a:hover {
+     background-color: black;
+		color: white;
+	
+}
+
+.navbar ul 
+{	
+	height:50px;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #0b243d;
+}
+
+.navbar li a {
+  float: left;
+  display: block;
+  color:white;
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 22px;
+}
+
+
   </style>
 </head>
-<body>
+<body class="animated fadeIn">
+<div class='navbar'>
+<ul>	
+<li style="margin:0px;padding-left:5px;padding-right:2px;padding-top:0px;float:left;"><a href="userdashboard.php"><img src="images/back.png" height="30px" width="30px"></a> </li>
+<li><img src="images/logo.png" style="padding-left:5px;padding-right:10px;padding-top:10px;float:left;height:35px;width:250px"></li>
 
 
-<table width="100%" height="20px">
-	<tr>
-	<td width="5%" bgcolor="black" >
-	
-	<h5 style="padding-top: 15px"><center><a href="userdashboard.php"><img src="back.png" height="30px" width="30px"></a></center></h5>
+<li ><a class="active" href="userdashboard.php">Home</a></li>
+<li><a href="#about">About</a></li>
+<li ><a href="#contact">Contact</a></li>
 
-	</td>
-	
-	<td width="90%" bgcolor="black">
-	<h2 style="color: white;padding-top: 10px "><center>UPCOMING MOVIES</center></h2>
-
-	</td>
-	
-	<td width="5%" bgcolor="black"><div class="h5">
-	<h4 ><center><a href="userlogout.php">Logout</a></center></h4>
-	</div>
-	</td>
-</tr>
-</table>
+<?php if(isset($_SESSION['name']))
+	{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign' onclick="document.location.href='userlogout.php'">Logout</button></li>
+<?php }else{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign'  onclick="document.location.href='index.php'">Sign In</button></li>
+<?php }?>
 
 
+
+</ul>
+</div>
   <!-- Swiper -->
   <div class="swiper-container">
  
@@ -99,7 +148,7 @@
 		{
 			while($row = mysqli_fetch_array($run))
 			{
-				if($row['Release_date']>='2018-09-01')
+				if($row['Release_date']>='2018-10-16')
 				{
 				?>
 
@@ -109,7 +158,7 @@
 	  <table width="auto" height="1200px" >
 	  <tr>
 	  
-		<td style="position:absolute;top:20px;left:40px">
+		<td style="position:absolute;top:60px;left:40px">
 		<center><h2><?php echo $row['Movie_Name']; ?></h2></center>
 		
 		
@@ -127,7 +176,7 @@
 		</center>
         </div>
 		
-		<td style="position:absolute;top:20px;right:40px">
+		<td style="position:absolute;top:60px;right:40px">
 				<center><h2>TRAILER</h2></center>
 		
 		<object width="900px" height="400px"  data="http://www.youtube.com/v/<?php echo $row['trailer']; ?>" type="application/x-shockwave-flash">
@@ -209,7 +258,7 @@
   </div>
 
   <!-- Swiper JS -->
-  <script src="swiper.min.js"></script>
+  <script src="js/swiper.min.js"></script>
 
   <!-- Initialize Swiper -->
   <script>

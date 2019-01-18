@@ -5,21 +5,21 @@
 		echo "";
 	}
 	else{
-		header('location:login.php');
+		header('location:admin.php');
 	}
 ?>
 
 <html>
 <head>	
-	<link href="dashstyle.css" type='text/css' rel="stylesheet">
-	<link href="animate.css" type='text/css' rel="stylesheet">
+	<link href="css/dashstyle.css" type='text/css' rel="stylesheet">
+	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
-	<title>Dashboard</title>
+	<title>Edit</title>
 </head>
 <body class='bg-gray'>
 
 <div class='header'>
-<center><img src='admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head'>ADMIN DASHBOARD</center>
+<center><img src='images/admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head'>ADMIN DASHBOARD</center>
 
 </center>
 
@@ -32,7 +32,6 @@
 <li><a href="users.php" >USERS</a></li>
 <li><a href="movie.php" >MOVIES</a></li>
 <li><a href="theatres.php" >THEATRES</a></li>
-<li><a href="shows.php" >SHOWS</a></li>
 <li><a href="timings.php" class="active">TIMINGS</a></li>
 <li><b class='logout' style="padding-top:14px;padding-right:2px;"><?php echo strtoupper("USER:".$_SESSION['user']);?></b></li>
 <li><a href="logout.php" class='logout'>LOGOUT</a></li>
@@ -100,8 +99,9 @@ include ("dbcon.php");
 
 </div>
 <?php	
-if( isset($_REQUEST['submit']))
+if( isset($_POST['submit']))
 	{	
+		include ("dbcon.php");
 		$seats=$_POST['seats'];
 		$theatre=$_POST['theatre'];
 		$grate=$_POST['grate'];
@@ -110,7 +110,7 @@ if( isset($_REQUEST['submit']))
 	
 	
 		$update_qry="UPDATE timings SET Theatre_Name='$theatre',showtime='$time',ticket_rate_Gold='$grate',
-		ticket_rate_Silver='$srate',seats='$seats', WHERE id='$id'";
+		ticket_rate_Silver='$srate',seats='$seats' WHERE id='$id'";
 		if(mysqli_query($con,$update_qry))
 		{
 			$_SESSION['updated3']=true;

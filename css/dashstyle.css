@@ -20,7 +20,7 @@ a{text-decoration: none;}
 
 .logout{
 	float:right;
-	padding-left:550px;
+	padding-left:640px;
 	
 }
 	
@@ -204,3 +204,22 @@ background-color: lightblue;}
     text-decoration: none;
     cursor: pointer;
 }
+
+.zoomimg{
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+	text-align: center;
+}
+
+.zoomimg:hover img{
+	
+	transform: scale(1.1);
+}
+
+.zoomimg img:hover{
+	
+   opacity:0.4;
+	
+}
+

@@ -5,22 +5,22 @@
 		echo "";
 	}
 	else{
-		header('location:login.php');
+		header('location:admin.php');
 	}
 ?>
 <html class="animated fadeIn">
 <head>
-	<link href="dashstyle.css" type='text/css' rel="stylesheet">
-	<link href="animate.css" type='text/css' rel="stylesheet">
+	<link href="css/dashstyle.css" type='text/css' rel="stylesheet">
+	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
-	<title>Dashboard</title>
+	<title>users</title>
 
 	
 </head>
-<body class='bg-gray'>
+<body class='bg-gray animated fadeIn'>
 
 <div class='header'>
-<center><img src='admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
+<center><img src='images/admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
 
 </center>
 
@@ -33,7 +33,6 @@
 <li><a href="users.php" class="active">USERS</a></li>
 <li><a href="movie.php" >MOVIES</a></li>
 <li><a href="theatres.php" >THEATRES</a></li>
-<li><a href="shows.php" >SHOWS</a></li>
 <li><a href="timings.php" >TIMINGS</a></li>
 <li><b class='logout' style="padding-top:14px;padding-right:2px;"><?php echo strtoupper("USER:".$_SESSION['user']);?></b></li>
 <li><a href="logout.php" class='logout'>LOGOUT</a></li>
@@ -46,7 +45,7 @@
 
 include ("dbcon.php");
 
-$qry="select username,email FROM users";
+$qry="select * FROM users";
 $result = mysqli_query($con,$qry);
 $row_count=mysqli_num_rows($result);
 
@@ -56,12 +55,13 @@ else{
 	echo  "<br><center><b>SHOWING ".$row_count." RESULTS.<b></center><br>";
 	
 ?>
-<table align='center' class="animated fadeInUp" border='1'>
+<table align='center' border='1'>
 
 <tr>
 <th>Sr.No</th>
 <th>USERNAME</th>
 <th>EMAIL-ID</th>
+<th>BOOKINGS</th>
 
 </tr>
 
@@ -75,6 +75,12 @@ for($i=0;$i<$row_count;$i++)
 	<td><?php echo $i+1 ?></td>
 	<td><?php echo $row["username"] ?></td>
 	<td><?php echo $row["email"] ?></td>
+	<td><?php $user=$row["username"];$qry5 = "select * from bookings where username='$user' ";
+		$res=mysqli_query($con,$qry5);
+		$book=mysqli_fetch_array($res);
+		while($book=mysqli_fetch_array($res)){
+		echo nl2br("\n"."Movie-".$book['movie']."\nDate-".$book['date']."\n");
+		}?></td>
 	</tr>
 	<?php
 }

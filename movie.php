@@ -5,14 +5,14 @@
 		echo "";
 	}
 	else{
-		header('location:login.php');
+		header('location:admin.php');
 	}
 ?>
 
 <html>
 <head>
-	<link href="dashstyle.css" type='text/css' rel="stylesheet">
-	<link href="animate.css" type='text/css' rel="stylesheet">
+	<link href="css/dashstyle.css" type='text/css' rel="stylesheet">
+	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
 
 	<title>Dashboard</title>
@@ -22,7 +22,7 @@
 <body class='bg-gray'>
 
 <div class='header'>
-<center><img src='admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
+<center><img src='images/admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
 
 </center>
 
@@ -35,7 +35,6 @@
 <li><a href="users.php" >USERS</a></li>
 <li><a href="movie.php" class="active">MOVIES</a></li>
 <li><a href="theatres.php" >THEATRES</a></li>
-<li><a href="shows.php" >SHOWS</a></li>
 <li><a href="timings.php" >TIMINGS</a></li>
 <li><b class='logout' style="padding-top:14px;padding-right:2px;"><?php echo strtoupper("USER:".$_SESSION['user']);?></b></li>
 <li><a href="logout.php" class='logout'>LOGOUT</a></li>
@@ -276,7 +275,7 @@ else{
 	
 	?>
 <table align='center' class="animated fadeInUp"  border='1'>
-<tr><center><button class='create animated lightSpeedIn' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center></tr>
+<tr><center><button class='create animated fadeInUp' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center></tr>
 
 <tr>
 <th>Sr.No</th>
@@ -313,10 +312,10 @@ for($i=0;$i<$row_count;$i++)
 	
 	<td><img class="myImg" style="cursor: pointer;" onclick="imgdisp(this.src)" alt="No Image" src="Image/<?php echo $row["poster"] ?>" height="50px" width='50px' ></td>
 
-	<td><center><a href="movie.php?delid=<?php echo $row["Movie_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="delete.png">
+	<td><center><a href="movie.php?delid=<?php echo $row["Movie_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/delete.png">
 	</a></center></td>
 	
-	<td><a href="edit.php?eid=<?php echo $row["Movie_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="edit.png">
+	<td><a href="edit.php?eid=<?php echo $row["Movie_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/edit.png">
 	</a></td>
 
 	</tr>

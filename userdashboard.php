@@ -1,44 +1,84 @@
 <?php 
 	session_start();
+	$_SESSION['theatre_n']=null;
+	$_SESSION['timer']=null;
 ?>
 
 
 <html>
 <head>
 <title>User Dashboard</title>
-<link href="animate.css" type='text/css' rel="stylesheet">
+<link href="css/animate.css" type='text/css' rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="swiper.min.css">
+<link rel="stylesheet" type="text/css" href="css/swiper.min.css">
 
-<link rel="stylesheet" type="text/css" href="userdashboardstyles.css">
+<link rel="stylesheet" type="text/css" href="css/userdashboardstyles.css">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <style>
 .navbar li a:hover {
-    color: black;
-	background-color:white;
+     background-color: black;
+		color: white;
 	
 }
 
 .navbar ul 
 {	
-	height:60px;
+	height:50px;
     list-style-type: none;
     overflow: hidden;
     background-color: #0b243d;
 }
 
 .navbar li a {
-    display: block;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
+  float: left;
+  display: block;
+  color:white;
+  text-align: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 22px;
 }
+
+.navbar li a.active {
+	background-color:black;
+ color: white;
+}
+
+
+.navbar .search-container {
+  float: right;
+}
+
+.navbar input[type=text] {
+  padding: 6px;
+  margin-top: 2px;
+  font-size: 17px;
+  border: none;
+}
+
+.navbar .search-container button {
+  float: right;
+  padding: 7.5px 10px;
+  margin-top: 2px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar .search-container button:hover {
+  background: #ccc;
+}
+
+
 
 </style>
 
-<body >
+<body class="animated fadeIn">
 
 <div class='navbar'>
 <ul>	
@@ -49,33 +89,84 @@
 	<span></span>
 	</div>
 </li>
-<li style="padding-left:50px;padding-right:20px;padding-top:10px;"><a href="userdashboard.php">Home</a></li>	
-<li><h4 style="padding:10px; float:right;"><a href="userlogout.php">LOGOUT</a></h4></li>
-<li class="search"><input type='text' name='search' placeholder="Search movie"></li>
-<li><button class='sign' onclick="document.location.href='index.php'">Sign In</button></li>
+
+<li><img src="images/logo.png" style="padding-left:50px;padding-right:20px;padding-top:8px;float:left;height:35px;width:250px" /></li>
+
+<li ><a class="active" href="userdashboard.php">Home</a></li>
+<li><a href="#about">About</a></li>
+<li ><a href="#contact">Contact</a></li>
+
+<?php if(isset($_SESSION['name']))
+	{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign' onclick="document.location.href='userlogout.php'">Logout</button></li>
+<?php }else{?>
+<li style="padding-left:50px;padding-right:20px;padding-top:6px;"><button class='sign'  onclick="document.location.href='index.php'">Sign In</button></li>
+<?php }?>
+ 
+ 
+ 
+  <div class="search-container">
+    <form method="post">
+      <input type="text" placeholder="Search Movie" name="search">
+      <button type="submit" name="search1" ><i class="fa fa-search"></i></button>
+    </form>
+  </div>
 
 </ul>
 </div>
 
+<?php
+if(isset($_POST['search1']))
+	
+{
+	$movie=$_POST['search'];
+	include('dbcon.php');
+	$qry1 = "Call searchmovie('$movie'); ";
+	$result=mysqli_query($con,$qry1);
+	$rows=mysqli_num_rows($result);
+	if($rows==0)
+	{
+		$_SESSION['noid']=$movie;
+		header('location:mdetails.php');
+		
+	}
+	$row = mysqli_fetch_array($result);
+	$_SESSION['mid']=$row['Movie_id'];
+	header('location:mdetails.php');
+	
+	
+}
+
+?>
+
+
+
+
+
 <div id="sidebar">
 	<ul>
-		<li><center><img src="../dash/images/profile.png" width="150px" height="150px" /></center></li>
+	
+		<li><center><img src="images/profile.png" width="150px" height="150px" /></center></li>
 		<?php if(isset($_SESSION['name']) && isset($_SESSION['email']))
-	{?>
+		{
+			?>
 		<li>Name : <?php echo $_SESSION['name'];?></li>
 		<li>Email : <?php echo $_SESSION['email'];?></li>
-		<li>Movie Booked : <?php 
-		if(!empty($_SESSION['movie_n'])){ 
-			echo $_SESSION['movie_n'];
+		<li>Movie Booked : <br>
+		
+		<?php 
+		$user=$_SESSION['name']; 
+		include 'dbcon.php';
+		$qry5 = "select * from bookings where username='$user' ";
+		$res=mysqli_query($con,$qry5);
+		while($book=mysqli_fetch_array($res)){
+		echo nl2br("\n"."Movie-".$book['movie']."\nDate-".$book['date']."\n");
 		}
-		else{
-			echo"";
-	}
-	
-		?> </li>
+		?> 
+		</li>
 		
 		<?php }else{?>
-		<li><h4>You are not Logged In.Please Sign In</h4></li>
+		<li><h4>You are not Logged In.Please Sign In to book tickets.</h4></li>
 		<?php }?>
 		
 	</ul>
@@ -121,29 +212,43 @@ $row_count=mysqli_num_rows($result);
 	
 	
 	
-	</div>
+</div>
     <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
+<div class="swiper-pagination"></div>
+</div>
+
+
+<br>
+
+
+<div style="background-color: #0b243d;">
+<br><br>
+<h2 class="headings" style="margin-left:30px;color:#886D2C;font-size:30px;text-decoration:underline;text-decoration-color:red;">NEW </h2>
+
+<h2 style="margin-left:30px;color:#886D2C;font-size:30px;">RELEASES</h2>
+<br>
+<br>
 </div>
 
 
 
 
 
-<div class="title1">
-</div>
+<h2 style="position:absolute;left:30px;top:720px">COMEDY<i class="right"></i></h2>
+
+<h2 style="position:absolute;left:30px;top:1150px">DRAMA/ACTION<i class="right"></i></h2>
+
+<h2 style="position:absolute;left:30px;top:1590px">HORROR/THRLLER<i class="right"></i></h2>
+
+
 
 
 <div class="movie-list">
-<h2 style="position:absolute;left:30px;top:600px;">COMEDY</h2>
-<h2 style="position:absolute;left:30px;top:1000px;">DRAMA/ROMANCE</h2>
 
-<h2 style="position:absolute;left:30px;top:1400px;">ACTION/THRILLER</h2>
-
-
- <table  width="100%" height="1280px" >
+ <table height="1300px" width="100%">
  
-        <tr style="padding-top:40px;padding-bottom:10px;">
+        <tr style="padding-bottom:10px;">
+	
         <?php
        
         include('dbcon.php');
@@ -154,19 +259,17 @@ $row_count=mysqli_num_rows($result);
 		$rows=mysqli_num_rows($run);
 		while($row = mysqli_fetch_array($run))
 		{
-		if($row['Release_date']<="2018-11-31")
+		if($row['Release_date']<="2018-10-15")
 		{
         ?>       
                 <td width="25%">
                 <center>
-                        <div class="flip-card">
  
                      <div class="zoomimg">
 					 <a href="mdetails.php?id=<?php echo $row['Movie_id'];?>">
-		<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> </div>
+		<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> 
 					 </a>
-               
-                         </div>
+					 </div>
                    
                 </center>
                 </td>
@@ -180,30 +283,29 @@ $row_count=mysqli_num_rows($result);
 		
 		
 		
-		<tr style="padding-top:30px;padding-bottom:10px;">
+		<tr style="padding-top:20px;padding-bottom:10px;">
         <?php
        
         include('dbcon.php');
        
-        $qry = "select * from movies where type='drama'";
+        $qry = "select * from movies where type like '%drama%' or type like '%action%'";
  
         $run = mysqli_query($con,$qry);
 		$rows=mysqli_num_rows($run);
 		while($row = mysqli_fetch_array($run))
 		{
-		if($row['Release_date']<="2018-11-31")
+		if($row['Release_date']<="2018-10-15")
 		{
         ?>       
                 <td width="25%">
                 <center>
-                        <div class="flip-card">
+                 
  
                      <div class="zoomimg">
 					 <a href="mdetails.php?id=<?php echo $row['Movie_id'];?>">
-		<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> </div>
+		<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> 
 					 </a>
-               
-                         </div>
+					</div>
                    
                 </center>
                 </td>
@@ -217,30 +319,31 @@ $row_count=mysqli_num_rows($result);
 		
 		
 		
-		<tr style="padding-top:30px;padding-bottom:10px;">
+		<tr style="padding-top:20px;padding-bottom:10px;">
         <?php
        
         include('dbcon.php');
        
-        $qry = "select * from movies where type='action'";
+        $qry = "select * from movies where type like '%horror%' or type like '%thriller%'";
  
         $run = mysqli_query($con,$qry);
 		$rows=mysqli_num_rows($run);
 		while($row = mysqli_fetch_array($run))
 		{
-		if($row['Release_date']<="2018-11-31")
+		if($row['Release_date']<="2018-10-15")
 		{
         ?>      
                 <td width="25%">
                 <center>
-                        <div class="flip-card">
+                       
  
                      <div class="zoomimg">
 					 <a href="mdetails.php?id=<?php echo $row['Movie_id'];?>">
-		<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> </div>
+			<img height="300px" width="300px" style="transition:0.75s;border-radius:20px;" src="Image/<?php echo $row['poster'];?>"> 
 					 </a>
+					 </div>
                
-                         </div>
+                         
                    
                 </center>
                 </td>
@@ -258,10 +361,10 @@ $row_count=mysqli_num_rows($result);
 
 
 
-<div class="book"><center><form action="booking.php" method="post"> <input type="submit" name="submit" value="Book Now"> </form></center>
+<div class="book" style="background-color:#0b243d" ><center><form action="booking.php" method="post"> <input type="submit" name="submit" value="Book Now"> </form></center>
 </div>
 
-<div class="book1"><center><a href="upcomingmovies.php"><input type="submit" name="submit" value="Upcoming Movies"></center></a></center>
+<div class="book1" style="background-color:#0b243d ;margin-bottom:100px;"><center><a href="upcomingmovies.php"><input type="submit" name="submit" value="Upcoming Movies"></center></a></center>
 </div>
 
 
@@ -274,7 +377,7 @@ if(isset($_POST["submit"]))
 ?>
 
 
-<script type="text/javascript" src="swiper.min.js">
+<script type="text/javascript" src="js/swiper.min.js">
 </script>
 
 

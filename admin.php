@@ -2,20 +2,23 @@
 <html lang="en_US">
 <head>
 	<meta charset="UTF-8">
-		<title>EVENT MANAGEMENT SYSTEM</title>
-		<link rel="stylesheet" type="text/css" href="styles1.css">
+		<title>Admin Login</title>
+		<link rel="stylesheet" type="text/css" href="css/styles1.css">
+		<link href="css/animate.css" type='text/css' rel="stylesheet">
+
 </head>
 <body>
 	<div class="title">
-		<h1  align="center"> Welcome To Admin Excess </h1>
+			<h3 align="right" style="margin-right:20px;"><a href="index.php">User Login</a></h3>
+
 	</div>
 	
 	<div class="loginbox">
-		<img src="../dash/images/profile.png" class="profile">
+		<img src="images/profile.png" class="profile">
 		
 		<h2>Admin Login</h2>
 		
-		<form action="login.php" method="post">
+		<form action="admin.php" method="post" class="animated flipInY">
 			<p>Admin-Name</p>
 			<input type="text" name="admin_name" placeholder="Enter Admin-Name">
 			
@@ -55,7 +58,6 @@
 			?>
 			<script>
 			alert("Username and Password Not Match.");
-			window.open('login.php','_self');
 			</script>
 			<?php
 		}

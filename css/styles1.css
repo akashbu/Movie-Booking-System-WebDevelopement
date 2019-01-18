@@ -1,10 +1,21 @@
 body{
 	margin:0;
 	padding: 0;
-	background: url(eimg.jpg);
+	background: url('../images/banner.jpg');
 	background-size: cover;
 	font-family: san-serif;
 	opacity: 0.8;
+}
+
+.title a{
+	text-decoration: none;
+	font-size: 15px;
+	line-height: 20px;
+	color: white;
+}
+
+.title a:hover{
+	color:white;
 }
 
 
@@ -19,7 +30,7 @@ body{
 		transform: translate(-50%,-50%);
 		box-sizing: border-box;
 		padding: 70px 30px;
-		margin-top: 40px;
+		margin-top: 20px;
 		
 }
 

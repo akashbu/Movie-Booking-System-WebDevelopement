@@ -4,24 +4,24 @@
 		echo "";
 	}
 	else{
-		header('location:login.php');
+		header('location:admin.php');
 	}
 ?>
 
-<html  >
+<html>
 <head>
-	<link href="dashstyle.css" type='text/css' rel="stylesheet">
-	<link href="animate.css" type='text/css' rel="stylesheet">
+	<link href="css/dashstyle.css" type='text/css' rel="stylesheet">
+	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
 
 	<title>Dashboard</title>
 
 	
 </head>
-<body class='bg-gray'>
+<body class='bg-gray animated fadeIn'>
 
 <div class='header'>
-<center><img src='admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
+<center><img src='images/admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
 
 </center>
 
@@ -34,7 +34,6 @@
 <li><a href="users.php" >USERS</a></li>
 <li><a href="movie.php" >MOVIES</a></li>
 <li><a href="theatres.php" class="active">THEATRES</a></li>
-<li><a href="shows.php"  >SHOWS</a></li>
 <li><a href="timings.php" >TIMINGS</a></li>
 <li><b class='logout' style="padding-top:14px;padding-right:2px;"><?php echo strtoupper("USER:".$_SESSION['user']);?></b></li>
 <li><a href="logout.php" class='logout' >LOGOUT</a></li>
@@ -174,15 +173,15 @@ $result = mysqli_query($con,$qry);
 $row_count=mysqli_num_rows($result);
 
 if($row_count==0){echo  "<br><center><b>SHOWING 0 RESULTS.<b></center>";
-?><center><button class='create animated fadeInUp' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center><?php
+?><center><button class='create animated fadeIn' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center><?php
 }
 else{
 	echo  "<br><center><b>SHOWING ".$row_count." RESULTS.<b></center><br>";
 	
 ?>
-<table align='center' class="animated fadeInUp"  border='1'>
+<table align='center' class="animated fadeIn"  border='1'>
 
-<tr><center><button class='create animated fadeInUp' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center></tr>
+<tr><center><button class='create animated fadeIn' onclick="document.getElementById('insert').style.display='block'"> INSERT </button></center></tr>
 <tr>
 <th>Sr.No</th>
 <th>THEATRE</th>
@@ -215,10 +214,10 @@ for($i=0;$i<$row_count;$i++)
 	<td><?php echo $row["time5"] ?></td>
 	
 
-	<td><center><a href="?delid=<?php echo $row["Theatre_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="delete.png">
+	<td><center><a href="?delid=<?php echo $row["Theatre_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/delete.png">
 	</a></center></td>
 	
-	<td><a href="theatre_edit.php?eid=<?php echo $row["Theatre_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="edit.png">
+	<td><a href="theatre_edit.php?eid=<?php echo $row["Theatre_id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/edit.png">
 	</a></td>
 
 	</tr>

@@ -1,27 +1,26 @@
 body{
 	margin:0;
 	padding: 0;
-	background: url(eimg.jpg);
+	background: url('../images/banner.jpg');
 	background-size: cover;
-
+	font-family: san-serif;
 	opacity: 0.8;
-
 }
 
 .title a{
 	text-decoration: none;
 	font-size: 15px;
 	line-height: 20px;
-	color: #fb2525;
+	color: white;
 }
 
 .title a:hover{
-	color:#000;
+	color:white;
 }
 
 .loginbox{
 		width:320px;
-		height: 580px;
+		height: 420px;
 		background: #000;
 		color: #fff;
 		top: 50%;
@@ -30,24 +29,24 @@ body{
 		transform: translate(-50%,-50%);
 		box-sizing: border-box;
 		padding: 70px 30px;
-		margin-top: 90px;
+		margin-top: 20px;
 		
 }
 
 .profile{
-	width: 75px;
-	height: 75px;
+	width: 100px;
+	height: 100px;
 	border-radius: 50%;
 	position: absolute;
 	top: -50px;
-	left: calc(50% - 40px);
+	left: calc(50% - 50px);
 }
 
 h2{
-	padding-bottom: 10px;
-	margin: 0px;
+	padding: 0 0 20px;
+	margin: 0;
 	text-align: center;
-	font-size: 15px;
+	font-size: 20px;
 }
 
 .loginbox p{
@@ -58,18 +57,18 @@ h2{
 
 .loginbox input{
 	width: 100%;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 
 
-.loginbox input[type="password"], input[type="text"], input[type="email"]{
+.loginbox input[type="password"], input[type="text"]{
 	border: none;
 	border-bottom: 1px solid #fff;
 	background: transparent;
 	outline: none;
 	height: 30px;
 	color: #fff;
-	font-size: 13px;
+	font-size: 12px;
 }
 
 

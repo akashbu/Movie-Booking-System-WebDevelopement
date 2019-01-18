@@ -4,24 +4,26 @@
 		echo "";
 	}
 	else{
-		header('location:login.php');
+		header('location:admin.php');
 	}
+		
+	
 ?>
 
 <html  >
 <head>
-	<link href="dashstyle.css" type='text/css' rel="stylesheet">
-	<link href="animate.css" type='text/css' rel="stylesheet">
+	<link href="css/dashstyle.css" type='text/css' rel="stylesheet">
+	<link href="css/animate.css" type='text/css' rel="stylesheet">
 
 
-	<title>Dashboard</title>
+	<title>Admin Page</title>
 
 	
 </head>
 <body class='bg-gray'>
 
 <div class='header'>
-<center><img src='admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
+<center><img src='images/admin.png' alt="AdminLogo" id="adminlogo"><br><center id='head' class="animated flipInX">ADMIN DASHBOARD</center>
 
 </center>
 
@@ -34,7 +36,6 @@
 <li><a href="users.php" >USERS</a></li>
 <li><a href="movie.php" >MOVIES</a></li>
 <li><a href="theatres.php" >THEATRES</a></li>
-<li><a href="shows.php"  >SHOWS</a></li>
 <li><a href="timings.php" class="active">TIMINGS</a></li>
 <li><b class='logout' style="padding-top:14px;padding-right:2px;"><?php echo strtoupper("USER:".$_SESSION['user']);?></b></li>
 <li><a href="logout.php" class='logout' >LOGOUT</a></li>
@@ -193,10 +194,10 @@ for($i=0;$i<$row_count;$i++)
 	<td><?php echo $row["seats"] ?></td>
 	
 
-	<td><center><a href="?delid=<?php echo $row["id"] ?>" style="color:white"><img style="height:20px;width:20px" src="delete.png">
+	<td><center><a href="?delid=<?php echo $row["id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/delete.png">
 	</a></center></td>
 	
-	<td><a href="edit_timings.php?eid=<?php echo $row["id"] ?>" style="color:white"><img style="height:20px;width:20px" src="edit.png">
+	<td><a href="edit_timings.php?eid=<?php echo $row["id"] ?>" style="color:white"><img style="height:20px;width:20px" src="images/edit.png">
 	</a></td>
 
 	</tr>
